@@ -3,7 +3,7 @@ Precipitation Processing Tools (PPTs) it's an open source code developed by Vin√
 
 Requisites:
 
-  *Python 2.7 or above (For Python 3 under work)
+  *Python 3.6 or above
   
   *PyQt5 python package
   
@@ -13,4 +13,4 @@ Requisites:
   
   
 Recommendations: 
-  *Install Anaconda Python 2.7 (https://www.anaconda.com/download/) and the Gdal package (https://anaconda.org/conda-forge/gdal)
+  *Install Anaconda Python 3.6 or above (https://www.anaconda.com/download/) and the Gdal package (https://anaconda.org/conda-forge/gdal)
