@@ -9,6 +9,8 @@ Requisites:
   
   *Gdal python package
   
+  *wget python packge
+  
   
 Recommendations: 
   *Install Anaconda Python 2.7 (https://www.anaconda.com/download/) and the Gdal package (https://anaconda.org/conda-forge/gdal)
