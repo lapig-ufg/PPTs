@@ -9,7 +9,7 @@ Requisites:
   
   *Gdal python package
   
-  *wget python packge
+  *wget package (If windows!, download here: http://gnuwin32.sourceforge.net/packages/wget.htm)
   
   
 Recommendations: 
