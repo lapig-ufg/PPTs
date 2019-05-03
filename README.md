@@ -14,3 +14,22 @@ Requisites:
   
 Recommendations: 
   *Install Anaconda Python 3.6 or above (https://www.anaconda.com/download/) and the Gdal package (https://anaconda.org/conda-forge/gdal)
+
+#HOW TO RUN
+
+You can use the PPT_UI_RUN.py to run an user-friendly interface or parse some arguments to Integration.py like:
+
+--ProdTP' = 'GPM_M','GPM_D','TRMM_M','TRMM_D'
+GPM_M: GPM Monthly (IMERGM v4);
+GPM_D: GPM Daily (IMERGDF v4);
+TRMM_M: TRMM Monthly (TRMM 3B43 v7);
+TRMM_D: TRMM Daily (TRMM 3B42 v7)')
+	
+ --StartDate = Insert the start date
+	--EndDate = Insert the end date
+	--ProcessDir = Insert the processing directory path
+	--SptSlc = Insert the slice feature path (if not used, it assumes a Global product)
+	--OP - Call this argument if you wanna Only Process the data. Make sure you have a directory with a raw files subfolder!!!!
+ 
+ ***UNDER CONSTRUCTION!***
+ You may experience bugs and print in brazilian portuguese
