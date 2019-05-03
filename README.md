@@ -9,7 +9,7 @@ Requisites:
   
   *Gdal python package
   
-  *wget package (If windows!, download setup here: http://gnuwin32.sourceforge.net/packages/wget.htm and add C:\Program Files (x86)\GnuWin32\bin to variables of the system)
+  *wget package (If windows!, download Cygwin setup here: http://cygwin.com/install.html and add C:\cygwin64 to variables of the system)
   
   
 Recommendations: 
