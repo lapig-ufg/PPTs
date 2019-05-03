@@ -41,7 +41,7 @@ TRMM_D: TRMM Daily (TRMM 3B42 v7)
 ***--OP*** = Call this argument if you wanna Only Process the data. Make sure you have a directory with a raw files subfolder!!!!
  
  
- **E.G.***: python3 Integration.py --ProdTP GPM_M --StartDate 2018-01-01 --EndDate 2018-12-31 --ProcessDir ~./mydirectory --SptSlc ~./brazil_boundary.shp --OP
+ **E.G.***: python Integration.py --ProdTP GPM_M --StartDate 2018-01-01 --EndDate 2018-12-31 --ProcessDir ~./mydirectory --SptSlc ~./brazil_boundary.shp --OP
  
  
  ***UNDER CONSTRUCTION!***
