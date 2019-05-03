@@ -4,20 +4,16 @@
 #ttp://stackoverflow.com/questions/34831770/download-a-file-in-python-with-urllib.request-instead-of-urllib
 #ttp://stackoverflow.com/questions/25501090/how-to-get-wget-command-info-with-python
 
-from urllib.request import urlopen
-
-import http.cookiejar as cookielib
-
 import sys
 import os
 import re
 import string
 import datetime
-import urllib.request
+from urllib.request import urlopen
 
 from Login_UI import retrieveLogin
 
-def trmm_month_download(input_dir, Start_Date = None,End_Date = None, backslh ='\\'):
+def gpm_month_download(outputDir, Start_Date = None,End_Date = None, backslh ='\\'):
 
     GetLoginInfo = list(retrieveLogin())
 
@@ -28,10 +24,10 @@ def trmm_month_download(input_dir, Start_Date = None,End_Date = None, backslh ='
         start_month = int(Start_Date[1])
         start_day = 1
     except:
-        Start_Date = ['1998','01','01']
-        start_year = '1998'
-        start_month = '01'
-        start_day = '01'
+        Start_Date = ['2014','03','12']
+        start_year = '2014'
+        start_month = '03'
+        start_day = '12'
     try:
         End_Date =  list(map(int,(End_Date).split('-')))
         end_year = int(End_Date[0])
@@ -68,10 +64,8 @@ def trmm_month_download(input_dir, Start_Date = None,End_Date = None, backslh ='
     #Download files
     try:
         for i in range(0,len(years),1):
-            
-            #print(years[i])
-            
-            url ='https://disc2.gesdisc.eosdis.nasa.gov/data/TRMM_L3/TRMM_3B43.7/'+years[i]+'/'    
+                    
+            url ='https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/GPM_3IMERGM.05/'+years[i]+'/'    
             
             #Acess the URL
             try:
@@ -83,22 +77,18 @@ def trmm_month_download(input_dir, Start_Date = None,End_Date = None, backslh ='
             string = urlpath.read().decode('utf-8')
             
             #Extract HDF5 files and make an file list
-            pattern = re.compile('3B43.*?HDF.*?')
+            pattern = re.compile('3B.*?HDF5.*?')
             filelist = list(set(list(map(str,pattern.findall(string)))))
             filelist.sort()
 
-            #print(filelist);
-
             try:
                 try:
-                    startImg = filelist.index('3B43.'+str_Start_Date[0]+str_Start_Date[1]+'01'+'.7.HDF')
+                    startImg = filelist.index('3B-MO.MS.MRG.3IMERG.'+str_Start_Date[0]+str_Start_Date[1]+'01'+'-S000000-E235959.'+ str_Start_Date[1] +'.V05B.HDF5')
                 except:
-                    startImg = filelist.index('3B43.'+str_Start_Date[0]+str_Start_Date[1]+'01'+'.7A.HDF')
+                    startImg = filelist.index('3B-MO.MS.MRG.3IMERG.20140312-S000000-E235959.03.V05B.HDF5')
             except:
                 startImg = None
             
-            #print startImg, '3B43.'+str_Start_Date[0]+str_Start_Date[1]+'01'+'.7.HDF'
-
             #DEL UNDER START
             if years[i] == str_Start_Date[0]:
                 #Start month
@@ -108,11 +98,9 @@ def trmm_month_download(input_dir, Start_Date = None,End_Date = None, backslh ='
                     pass
             else:
                 pass
+            
             try:
-                try:
-                    endImg = filelist.index('3B43.'+str_End_Date[0]+str_End_Date[1]+'01'+'.7.HDF')
-                except:
-                    endImg = filelist.index('3B43.'+str_End_Date[0]+str_End_Date[1]+'01'+'.7A.HDF')
+                endImg = filelist.index('3B-MO.MS.MRG.3IMERG.'+str_End_Date[0]+str_End_Date[1]+'01'+'-S000000-E235959.'+str_End_Date[1]+'.V05B.HDF5')
             except:
                 endImg = None
             
@@ -126,12 +114,15 @@ def trmm_month_download(input_dir, Start_Date = None,End_Date = None, backslh ='
             else:
                 pass
 
-            filteredList = filelist #= list(filter(lambda x: x not in os.listdir(input_dir),filelist))
+            filteredList = filelist #= list(filter(lambda x: x not in os.listdir(outputDir),filelist))
 
+            print(filteredList)
+       
             for item in range(0,len(filteredList)):
                 
-                os.system('wget --user=' + GetLoginInfo[0] + ' --password=' + GetLoginInfo[1] + ' --show-progress -c -q '+  url + filteredList[item] + ' -O ' + input_dir + backslh + filteredList[item])
+                os.system('wget --user=' + GetLoginInfo[0] + ' --password=' + GetLoginInfo[1] + ' --show-progress -c -q '+  url + filteredList[item] + ' -O ' + outputDir + backslh + filteredList[item])
 
     except:
         print ('\nDownloads finished')
+    
     print ('\nDownloads finished')

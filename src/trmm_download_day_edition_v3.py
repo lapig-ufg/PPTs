@@ -17,53 +17,9 @@ import urllib.request
 
 from Login_UI import retrieveLogin
 
-def GetNasaPermission():
-    #GET NASA HTTPS DOWNLOAD PERMISSION
-
-    GetLoginInfo = retrieveLogin()
-
-    if GetLoginInfo != None:
-        retries = 3
-        while retries != 0:
-            try:
-                username = GetLoginInfo[0]
-                password = GetLoginInfo[1]
-                
-                password_manager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
-                password_manager.add_password(None, "https://urs.earthdata.nasa.gov", username, password)
-                
-                cookie_jar = cookielib.CookieJar()
-                
-                opener = urllib.request.build_opener(
-                    urllib.request.HTTPBasicAuthHandler(password_manager),
-                    #urllib.request.HTTPHandler(debuglevel=1),    # Uncomment these two lines to see
-                    #urllib.request.HTTPSHandler(debuglevel=1),   # details of the requests/responses
-                    urllib.request.HTTPCookieProcessor(cookie_jar))
-                urllib.request.install_opener(opener)
-                
-                LoginFailTest = urlopen('https://disc2.nascom.nasa.gov/data/TRMM_L3/TRMM_3B42_Daily.7/1998/01/3B42_Daily.19980101.7.nc4\n')
-
-                print('Login successful in NASA HTTPS! WELCOME :3\n')
-                
-                break
-    
-            except:
-                print('Wrong Username or Password! Please try again... You have only %d tries!!!!\n') % retries
-                GetLoginInfo = retrieveLogin()
-                retries -= 1
-                continue
-        if retries ==0:
-            print('Bye\n');
-            sys.exit(2)
-
-    elif GetLoginInfo == None:
-        print('Bye\n');
-        sys.exit(2)
-
-
 def trmm_day_download(input_dir, Start_Date = None,End_Date = None, backslh ='\\'):
 
-    GetNasaPermission()
+    GetLoginInfo = list(retrieveLogin())
 
     #Get actual time
     try:
@@ -188,106 +144,14 @@ def trmm_day_download(input_dir, Start_Date = None,End_Date = None, backslh ='\\
                             pass
                 else:
                     pass
-    
-                #print filelist
-    
-                #Determine download block size --- default 1024 but you can up to 8192... However your files can be corrupted!
-                file_size_dl = 0
-                block_sz = 1024
                 
-                #File download poop
-                for k in range(0,len(filelist),1):
-                    
-                    #Acess metadata and get infos
-                    meta = (urlopen(url + filelist[k])).info()
-                    
-                    #Get file size
-                    file_size = int(meta.getheaders("Content-Length")[0])
-    
-                    if filelist[k] in os.listdir(input_dir):
-                        
-                        if int(os.path.getsize(input_dir+backslh+filelist[k])) == file_size:
-                            #print 'O arquivo ' + filelist[k] + ' ja existe em seu diretorio de armazenamento GPM_BRUTO e se assemelha ao mesmo arquivo do FTP de download!'
-                            pass
-                        else:
-                            print ('O arquivo ' + filelist[k] + ' ja existe em seu diretorio de armazenamento GPM_BRUTO, porem parece estar corrompido, incompleto ou desatualizado! Baixando novamente...\n')
-                            #Download message
-                            print ("Downloading: %s Bytes: %s MB" % (filelist[k], str(round(float(file_size)/1000000,2))))
-                            
-                            #Acess file and download
-                            remotefile = urlopen(url + filelist[k])
-                            localfile = open(input_dir + backslh +filelist[k],'wb')
-                            
-                            #Download message
-                            while True:
-                                buffer = remotefile.read(block_sz)
-                                if not buffer:
-                                    break
-                                file_size_dl += len(buffer)
-                                localfile.write(buffer)
-                                status = r"%3.3f MB  [%3.2f%%]" % ((float(file_size_dl)/1000000), file_size_dl * 100. /file_size)
-                                status = status + chr(8)*(len(status)+1)
-                                print (status),
-                            
-                            #Clear file download cache
-                            file_size_dl = 0
-                            
-                            #Close files
-                            localfile.write(remotefile.read())
-                            localfile.close()
-                            remotefile.close()
-                    else:
-    
-                                        #Download message
-                        print ("Downloading: %s Bytes: %s MB" % (filelist[k], str(round(float(file_size)/1000000,2))))
-                        
-                        #Acess file and download
-                        remotefile = urlopen(url + filelist[k])
-                        localfile = open(input_dir + backslh +filelist[k],'wb')
-                        
-                        #Download message
-                        while True:
-                            buffer = remotefile.read(block_sz)
-                            if not buffer:
-                                break
-                            file_size_dl += len(buffer)
-                            localfile.write(buffer)
-                            status = r"%3.3f MB  [%3.2f%%]" % ((float(file_size_dl)/1000000), file_size_dl * 100. /file_size)
-                            status = status + chr(8)*(len(status)+1)
-                            print (status),
-                        
-                        #Clear file download cache
-                        file_size_dl = 0
-                        
-                        #Close files
-                        localfile.write(remotefile.read())
-                        localfile.close()
-                        remotefile.close()
-                print ('\n')
-                filelist =[]
+                filteredList = filelist #= list(filter(lambda x: x not in os.listdir(input_dir),filelist))
+
+                for item in range(0,len(filteredList)):
+                
+                    os.system('wget --user=' + GetLoginInfo[0] + ' --password=' + GetLoginInfo[1] + ' --show-progress -c -q '+  url + filteredList[item] + ' -O ' + input_dir + backslh + filteredList[item])
+
+
     except:
         print ('\nDownloads finished')
     print ('\nDownloads finished')
-
-#input_dir = r'C:\Users\Vinicius\Desktop\Teste_new_TRMM\GPM_DAY\GPM_BRUTO'
-
-#trmm_day_download(input_dir,Start_Date='2014-12-30',End_Date='2015-01-02')
-
-#f = open(r'C:\Users\Vinicius\Desktop\Teste_new_TRMM'+'\\' +filelist[0],'wb')    
-#u = (urlopen(url + filelist[0]))
-#    
-#file_size_dl = 0
-#block_sz = 1024
-#while True:
-#    buffer = u.read(block_sz)
-#    if not buffer:
-#        break
-#
-#    file_size_dl += len(buffer)
-#    f.write(buffer)
-#    status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. /file_size)
-#    status = status + chr(8)*(len(status)+1)
-#    print status,
-#
-#f.close()
-    

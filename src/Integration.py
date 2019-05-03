@@ -1,16 +1,12 @@
 import os
 import sys
-import string
-#import commands
 import argparse
 import time
 import shutil
-import string
 import re
 import numpy
 import tkinter
 from tkinter import filedialog
-import string
 import platform
 import argparse
 import datetime
@@ -18,29 +14,22 @@ import datetime
 
 #GPM MONTH
 
-from gpm_download_v1_4_for_V05 import gpm_month_download
-from calibrate_gpm_v1_3 import calibrate_gpm
+from gpm_download_v1_6_for_V05 import gpm_month_download
 
 #GPM DAY
 
-#from gpm_download_day_edition_v3 import gpm_day_download
 from gpm_download_day_edition_v3_1_for_V05 import gpm_day_download
-#from gpm_download_dayL_edition_v3_forV04 import gpm_day_download
-#from gpm_download_day_Late_edition_v3 import gpm_day_download
-from calibrate_gpm_day import calibrate_gpm_day
 
 #TRMM MONTH
 
 from trmm_download_v1_3 import trmm_month_download
-from calibrate_trmm_v1_3 import calibrate_trmm #calibrate_gpm
 
 #TRMM DAY
 
 from trmm_download_day_edition_v3 import trmm_day_download
-from calibrate_gpm_day import calibrate_gpm_day #calibrate_gpm
 
 #AncillaryData
-from image_flip_v1 import flipper
+from image_process import process
 from get_info_v1_1 import get_info
 from data_geolocation_v1 import geolocation #nc_2_tiff
 from raster_cut_v1_1a import raster_cut
@@ -91,7 +80,7 @@ helios = [args.ProdTP,args.StartDate,args.EndDate,args.ProcessDir,args.SptSlc,ar
 print(helios)
 
 # Chamar funcoes do Tkinter e invocar janela de selecao de diretorio
-tkinter.Tk().withdraw()
+#tkinter.Tk().withdraw()
 
 #DIR CHECK
 if helios[3] == None:
@@ -219,11 +208,6 @@ except:
 	print ("Esse diretorio ja existe")
 
 try:
-	os.mkdir(input_dir_data + backslh + '2')
-except:
-	print ("Esse diretorio ja existe")
-
-try:
 	os.mkdir(input_dir_data + backslh + '3')
 except:
 	print ("Esse diretorio ja existe")
@@ -234,9 +218,7 @@ except:
 	print ("Esse diretorio ja existe")
 
 fst_dir = input_dir_data + backslh + '1'
-scd_dir = input_dir_data + backslh + '2'
 thd_dir = input_dir_data + backslh + '3'
-
 
 fth_dir = input_dir_data + backslh + DirEnd + "_processed"
 
@@ -253,7 +235,8 @@ if helios[0] == 'GPM_M':
 			if 	zero_list[n].find('.HDF5') > -1:
 				extract_subdata = 'HDF5:"%s%s%s"://Grid/precipitation' % (zero_dir,backslh,zero_list[n])
 				outfile = '%s%s%s.tif' % (fst_dir,backslh,zero_list[n][:-5])
-				flipper(outfile,extract_subdata)
+
+				process(outfile,extract_subdata,helios[0])
 				extract_subdata = outfile = None
 			else:
 				print(zero_list[n])
@@ -264,18 +247,18 @@ elif helios[0] == 'TRMM_M':
 		if zero_list[n].endswith('.HDF') > -1 and zero_list[n].find('.xml') == -1 and zero_list[n].find('.aux') == -1 and zero_list[n].find('.tfw') == -1:
 			extract_subdata = 'HDF4_SDS:UNKNOWN:"%s%s%s":0' % (zero_dir,backslh,zero_list[n])
 			outfile = '%s%s%s.tif' % (fst_dir,backslh,zero_list[n][:-4])
-			flipper(outfile,extract_subdata)
+			process(outfile,extract_subdata,helios[0])
 			extract_subdata = outfile = None
 		else:
 			print(zero_list[n])
 
 elif helios[0] == 'GPM_D':
-	print('hu3')
+	#print('hu3')
 	for n in range(0,len(zero_list),1):
 		if zero_list[n].endswith('.nc4') > -1 and zero_list[n].find('.xml') == -1 and zero_list[n].find('.aux') == -1 and zero_list[n].find('.tfw') == -1:
 			extract_subdata2 = 'HDF5:"%s%s%s"://precipitationCal' % (zero_dir, backslh, zero_list[n])
 			outfile2 = '%s%s%s_precipitationCal.tif' % (fst_dir,backslh, zero_list[n][:-4])
-			flipper(outfile2,extract_subdata2)
+			process(outfile2,extract_subdata2,helios[0])
 			extract_subdata2 = outfile2 = None
 		else:
 			print (zero_list[n])
@@ -287,7 +270,7 @@ elif helios[0] == 'TRMM_D':
 		if zero_list[n].find('.nc4') > -1 and zero_list[n].find('.xml') == -1 and zero_list[n].find('.aux') == -1 and zero_list[n].find('.tfw') == -1:
 			extract_subdata = 'HDF5:"%s%s%s"://precipitation' % (zero_dir,backslh,zero_list[n])
 			outfile = '%s%s%s.tif' % (fst_dir,backslh,zero_list[n][:-6])
-			flipper(outfile,extract_subdata)
+			process(outfile,extract_subdata,helios[0])
 			extract_subdata = outfile = None			
 		else:
 			print (zero_list[n])
@@ -300,46 +283,20 @@ fst_list = os.listdir(fst_dir)
 
 fst_list = sorted(fst_list, key = lambda x: x.rsplit('.', 1)[0])
 
-for n in range(0,len(fst_list),1):
-	if fst_list[n].find('.tif') > -1 and fst_list[n].find('.xml') == -1 and fst_list[n].find('.aux') == -1 and fst_list[n].find('.tfw') == -1:
-		print(fst_list[n])
-		get_info(fst_dir,fst_list[n],backslh)
+#for n in range(0,len(fst_list),1):
+#	if fst_list[n].find('.tif') > -1 and fst_list[n].find('.xml') == -1 and fst_list[n].find('.aux') == -1 and fst_list[n].find('.tfw') == -1:
+#		print(fst_list[n])
+#		get_info(fst_dir,fst_list[n],backslh)
 		
 for n in range(0,len(fst_list),1):
 	if fst_list[n].find('.tif') > -1 and fst_list[n].find('.xml') == -1 and fst_list[n].find('.aux') == -1 and fst_list[n].find('.tfw') == -1:
-		print(fst_list[n])
-		geolocation(fst_dir,scd_dir,fst_list[n],backslh)
+		#print(fst_list[n])
+		geolocation(fst_dir,thd_dir,fst_list[n],backslh)
 
 
 #====================================================================================LIST TWO==========================================================================================		
 shutil.rmtree(fst_dir)
-
-scd_list = os.listdir(scd_dir)
-
-scd_list = sorted(scd_list, key = lambda x: x.rsplit('.', 1)[0])		
-		
-		
-for n in range(0,len(scd_list),1):
-	if scd_list[n].find('.tif') > -1 and scd_list[n].find('.xml') == -1 and scd_list[n].find('.aux') == -1 and scd_list[n].find('.tfw') == -1:
-		get_info(scd_dir,scd_list[n],backslh)
-		
-for n in range(0,len(scd_list),1):
-	if scd_list[n].find('.tif') > -1 and scd_list[n].find('.xml') == -1 and scd_list[n].find('.aux') == -1 and scd_list[n].find('.tfw') == -1:
-		
-		if helios[0] == 'GPM_M':
-			calibrate_gpm(scd_dir,thd_dir,scd_list[n],backslh)
-		elif helios[0] == 'TRMM_M':
-			calibrate_trmm(scd_dir,thd_dir,scd_list[n],backslh)
-		elif helios[0] == 'GPM_D':
-			calibrate_gpm_day(scd_dir,thd_dir,scd_list[n],backslh)
-		elif helios[0] == 'TRMM_D':
-			calibrate_gpm_day(scd_dir,thd_dir,scd_list[n],backslh)
-		else:
-			print ("UQ TA CONTESSENO3??")
-			sys.exit(2)
-
 #====================================================================================LIST THREE==========================================================================================		
-shutil.rmtree(scd_dir)	
 
 geek = '_processed'
 
@@ -349,18 +306,22 @@ if helios[4] == 'None':
 	
 	thd_list = sorted(thd_list, key = lambda x: x.rsplit('.', 1)[0])
 			
-	for n in range(0,len(thd_list),1):
-		if thd_list[n].find('.tif') > -1 and thd_list[n].find('.xml') == -1 and thd_list[n].find('.aux') == -1 and thd_list[n].find('.tfw') == -1:
-			get_info(thd_dir,thd_list[n],backslh)
+	#for n in range(0,len(thd_list),1):
+	#	if thd_list[n].find('.tif') > -1 and thd_list[n].find('.xml') == -1 and thd_list[n].find('.aux') == -1 and thd_list[n].find('.tfw') == -1:
+	#		get_info(thd_dir,thd_list[n],backslh)
 
 	try:
-		os.rename(thd_dir,thd_dir[:-1] + "Global")
+		globalDir = thd_dir[:-1] + "Global"
+		if os.path.exists(globalDir):
+			shutil.rmtree(globalDir)
+		shutil.move(thd_dir,globalDir)
+
 	except:
 		pass
 	
 	DirEnd = "Global"
 	geek = ""
-	shutil.rmtree(fth_dir)
+	#shutil.rmtree(thd_dir)
 
 else:
 
@@ -380,7 +341,7 @@ else:
 			raster_cut(thd_dir,fth_dir,thd_list[n],fft_dir,backslh,helios[0])			
 	
 	#====================================================================================LIST FOUR==========================================================================================
-	#shutil.rmtree(thd_dir)
+	shutil.rmtree(thd_dir)
 	
 	fth_list = os.listdir(fth_dir)
 	
