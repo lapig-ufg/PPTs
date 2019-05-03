@@ -17,7 +17,7 @@ Recommendations:
 
 #HOW TO RUN
 
-You can use the ***PPT_UI_RUN.py** to run an user-friendly interface or parse some arguments to ***Integration.py*** like:
+You can use the **PPT_UI_RUN.py** to run an user-friendly interface or parse some arguments to ***Integration.py*** like:
 
 
 ***--ProdTP*** = 'GPM_M','GPM_D','TRMM_M','TRMM_D'
