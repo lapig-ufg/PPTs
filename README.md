@@ -24,7 +24,7 @@ You can use the **PPT_UI_RUN.py** to run an user-friendly interface or parse som
 GPM_M: GPM Monthly (IMERGM v4);
 GPM_D: GPM Daily (IMERGDF v4);
 TRMM_M: TRMM Monthly (TRMM 3B43 v7);
-TRMM_D: TRMM Daily (TRMM 3B42 v7)')
+TRMM_D: TRMM Daily (TRMM 3B42 v7)'
 	
 ***--StartDate*** = Insert the start date
 ***--EndDate*** = Insert the end date
