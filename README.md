@@ -45,6 +45,6 @@ TRMM_D: TRMM Daily (TRMM 3B42 v7)
  
  
  ***UNDER CONSTRUCTION!***
- You may experience bugs and print in brazilian portuguese
+ You may experience bugs and printS in brazilian portuguese
  
  
