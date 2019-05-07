@@ -9,7 +9,7 @@ Requisites:
   
   *Gdal python package
   
-  *wget package (If windows!, download Cygwin setup here http://cygwin.com/install.html, install with wget and add C:\cygwin64\bin to variables of the system)
+  *wget package (If windows!, download Cygwin setup here http://cygwin.com/install.html, install with wget package and add C:\cygwin64\bin to variables of the system)
   
   
 Recommendations: 
