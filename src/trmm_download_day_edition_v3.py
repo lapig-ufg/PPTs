@@ -92,7 +92,7 @@ def trmm_day_download(input_dir, Start_Date = None,End_Date = None, backslh ='\\
 
             for j in range(0,len(months),1):
                 #print months[j]
-                url ='https://disc2.nascom.nasa.gov/data/TRMM_L3/TRMM_3B42_Daily.7/'+years[i]+'/'+months[j]+'/'    
+                url ='https://disc2.gesdisc.eosdis.nasa.gov/data/TRMM_L3/TRMM_3B42_Daily.7/'+years[i]+'/'+months[j]+'/'    
                 #print url
                 #Acess the URL
                 try:
