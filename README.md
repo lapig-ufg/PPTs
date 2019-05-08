@@ -3,13 +3,13 @@ Precipitation Processing Tools (PPTs) it's an open source code developed by Vin√
 
 Requisites:
 
-  *Python 3.6 or above
+  * Python 3.6 or above
   
-  *PyQt5 python package
+  * PyQt5 python package
   
-  *Gdal python package
+  * Gdal python package
   
-  *wget package (If windows!, download Cygwin setup here http://cygwin.com/install.html, install with wget package and add C:\cygwin64\bin to variables of the system) - Tutorial: http://www.bloggingtips.info/install-wget-windows/
+  * wget package (If windows!, download Cygwin setup here http://cygwin.com/install.html, install with wget package and add C:\cygwin64\bin to variables of the system) - Tutorial: http://www.bloggingtips.info/install-wget-windows/
   
   
 Recommendations: 
