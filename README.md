@@ -15,7 +15,7 @@ Requisites:
 Recommendations: 
   *Install Anaconda Python 3.6 or above (https://www.anaconda.com/download/) and the Gdal package (https://anaconda.org/conda-forge/gdal)
 
-#HOW TO RUN
+# HOW TO RUN
 
 You can use the **PPT_UI_RUN.py** to run an user-friendly interface or parse some arguments to ***Integration.py*** like:
 
