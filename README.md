@@ -13,8 +13,8 @@ Requisites:
   
   
 Recommendations: 
-   *Install Anaconda Python 3.6 or above (https://www.anaconda.com/download/) and the Gdal package (https://anaconda.org/conda-forge/gdal)
-   *Before you try to download the data, create an account in NASA EartData website (https://urs.earthdata.nasa.gov), make login, click in Applications>Authorized Apps> Approve More Applications and select ***NASA GESDISC DATA ARCHIVE***.
+   * Install Anaconda Python 3.6 or above (https://www.anaconda.com/download/) and the Gdal package (https://anaconda.org/conda-forge/gdal)
+   * Before you try to download the data, create an account in NASA EartData website (https://urs.earthdata.nasa.gov), make login, click in Applications>Authorized Apps> Approve More Applications and select ***NASA GESDISC DATA ARCHIVE***.
 
 
 # HOW TO RUN
