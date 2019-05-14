@@ -7,15 +7,16 @@ Requisites:
   
   * PyQt5 python package
   
-  * Gdal python package
+  * Gdal python package and Gdal Binaries (if Unix system)
   
-  * **WGET package** (If windows!, download Cygwin setup here http://cygwin.com/install.html, install with wget package and add C:\cygwin64\bin to variables of the system) - Tutorial: http://www.bloggingtips.info/install-wget-windows/
+  * **WGET package** (If windows!, download Cygwin setup here http://cygwin.com/install.html, install with wget package and add C:\cygwin64\bin to variables of the system) - Tutorial: http://www.bloggingtips.info/install-wget-windows/. __Don't forget to add Cygwin (C:\cygwin64\bin) to the systen vauable PATH.__
   
   
 Recommendations: 
-   * Install Anaconda Python 3.6 or above (https://www.anaconda.com/download/) and the Gdal package (https://anaconda.org/conda-forge/gdal)
+   * Install Anaconda Python 3.6 or above (https://www.anaconda.com/download/) and the Gdal package (https://anaconda.org/conda-forge/gdal) and, for Windows users, add some system variables like:
+     * PATH =  ~.\Miniconda3; ~.\Miniconda3\Library\bin; 
+     * GDAL_DATA = .~\Anaconda\Library\share\gdal, ~.\Miniconda3\Scripts
    * Before you try to download the data, create an account in NASA EartData website (https://urs.earthdata.nasa.gov), make login, click in Applications>Authorized Apps> Approve More Applications and select ***NASA GESDISC DATA ARCHIVE***.
-
 
 # HOW TO RUN
 
