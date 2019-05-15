@@ -11,7 +11,7 @@ from osgeo import gdal
 def geolocation(input_dir,out_dir,data_file,backslh):
 	if data_file.find("IMERG") > -1:
 		geo_ext = '-179.95 89.95 179.95 -89.95'
-	elif data_file.find('3B43') > -1:
+	elif data_file.find('3B43') > -1 or data_file.find('3B42') > -1:
 		geo_ext = '-180.0 50 180.0 -50'
 
 	#print ("Preparando para converter", data_file)
