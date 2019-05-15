@@ -21,7 +21,7 @@ def raster_cut(input_dir,output_dir,data_file,limite_cut,backslh,product):
 			day = data_file[27:29]
 		data_type = 'gpm'
 		scale = '1000'
-	elif data_file.find('3B43') > -1:
+	elif data_file.find('3B43') > -1 or data_file.find('3B42') > -1:
 		year = data_file[5:9]
 		month = data_file[9:11]
 		data_type = 'trmm'
