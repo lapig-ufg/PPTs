@@ -65,7 +65,7 @@ def gpm_month_download(outputDir, Start_Date = None,End_Date = None, backslh ='\
     try:
         for i in range(0,len(years),1):
                     
-            url ='https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/GPM_3IMERGM.05/'+years[i]+'/'    
+            url ='https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/GPM_3IMERGM.06/'+years[i]+'/'    
             
             #Acess the URL
             try:
@@ -83,9 +83,9 @@ def gpm_month_download(outputDir, Start_Date = None,End_Date = None, backslh ='\
 
             try:
                 try:
-                    startImg = filelist.index('3B-MO.MS.MRG.3IMERG.'+str_Start_Date[0]+str_Start_Date[1]+'01'+'-S000000-E235959.'+ str_Start_Date[1] +'.V05B.HDF5')
+                    startImg = filelist.index('3B-MO.MS.MRG.3IMERG.'+str_Start_Date[0]+str_Start_Date[1]+'01'+'-S000000-E235959.'+ str_Start_Date[1] +'.V06B.HDF5')
                 except:
-                    startImg = filelist.index('3B-MO.MS.MRG.3IMERG.20140312-S000000-E235959.03.V05B.HDF5')
+                    startImg = filelist.index('3B-MO.MS.MRG.3IMERG.20140312-S000000-E235959.03.V06B.HDF5')
             except:
                 startImg = None
             
@@ -100,7 +100,7 @@ def gpm_month_download(outputDir, Start_Date = None,End_Date = None, backslh ='\
                 pass
             
             try:
-                endImg = filelist.index('3B-MO.MS.MRG.3IMERG.'+str_End_Date[0]+str_End_Date[1]+'01'+'-S000000-E235959.'+str_End_Date[1]+'.V05B.HDF5')
+                endImg = filelist.index('3B-MO.MS.MRG.3IMERG.'+str_End_Date[0]+str_End_Date[1]+'01'+'-S000000-E235959.'+str_End_Date[1]+'.V06B.HDF5')
             except:
                 endImg = None
             
